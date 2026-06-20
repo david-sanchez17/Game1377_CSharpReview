@@ -76,13 +76,13 @@ public class TextBasedAdventure : MonoBehaviour
     {
         {
 
-private Position[] teleporterLocations =
-{
+    private Position[] teleporterLocations =
+    {
         new Position { Row = 0, Col = 3 },
         new Position { Row = 3, Col = 0 }
     };
 
-private int playerRow = START_ROW;
+    private int playerRow = START_ROW;
 private int playerCol = START_COL;
 private int playerHealth = STARTING_HEALTH;
 
@@ -172,5 +172,137 @@ private void OutputTileInformation()
     private void EncounterEnemy()
     {
         PlayerTakeDamage(ENEMY_DAMAGE);
+    }
+    private void ItemPickup()
+    {
+        PlayerHeal(ITEM_HEAL_AMOUNT);
+    }
+    private void PlayerHeal (int amount)
+    {
+        playerHealth += amount;
+        Debug.Log("Your health is now: " + playerHealth);
+    }
+    private void PlayerTakeDamage (int amount)
+    {
+        playerHealth -= amount;
+        Debug.Log("Your health is now: " + playerHealth);
+        if (playerHealth <= 0)
+        {
+            playerHealth = 0;
+            Debug.Log("You have died. Game Over.");
+   
+        }
+    }
+    private void SetPlayerPosition(int newRow, int newCol)
+    {
+        if (!CheckIfNewPositionInTileBounds(newRow, newCol))
+        {
+            Debug.Log("Cannot go that way.");
+            return;
+        }
+        if (dungeon[newRow, newCol].Type == TileType.Blockade)
+        {
+            Debug.Log("A blockade prevents movement.");
+            return;
+        }
+
+        playerRow = newRow;
+        playerCol = newCol;
+    }
+
+    private bool CheckIfNewPositionInTileBounds(int newRow, int newCol)
+    {
+       bool rowInBounds = newRow >= 0 && newRow < dungeon.GetLength(0);
+
+        bool colInBounds = newCol >= 0 && newCol < dungeon.GetLength(1);
+
+        return rowInBounds && colInBounds;
+    }
+    private bool HandleInput(out int newRow, out int newCol)
+    {
+        newRow = playerRow;
+        newCol = playerCol;
+
+        bool keyPressed = true;
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            newRow--;
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            newRow++;
+        }
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            newCol--;
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            newCol++;
+        }
+        else
+        {
+            keyPressed = false;
+        }
+
+        return keyPressed;
+    }
+
+    private void UseTeleporter()
+    {
+        if (dungeon[playerRow, playerCol].Type != TileType.Teleporter)
+        {
+            Debug.Log("There is no teleporter here.");
+            return;
+        }
+        for (int i = 0; i < teleporterLocations.Length; i += TELEPORTER_PAIR_SIZE)
+        {
+            Position first = teleporterLocations[i];
+            Position second = teleporterLocations[i + 1];
+
+            bool atFirst = playerRow == first.Row && playerCol == first.Col;
+
+            bool atSecond = playerRow == second.Row && playerCol == second.Col;
+
+            if (atFirst)
+            {
+                playerRow = second.Row;
+                playerCol = second.Col;
+
+                Debug.Log("Teleported!");
+                OutputTileInformation();
+                return;
+            }
+
+            if (atSecond)
+            {
+                playerRow = first.Row;
+                playerCol = first.Col;
+
+                Debug.Log("Teleported!");
+                OutputTileInformation();
+                return;
+            }
+        }
+    }
+
+    private void ValidateTeleporters()
+    {
+        if (teleporterLocations.Length % TELEPORTER_PAIR_SIZE != 0)
+        {
+            Debug.LogError("Teleporters must be in pairs.");
+            return;
+        }
+
+        for (int i = 0; i < teleporterLocations.Length; i++)
+        {
+            Position location = teleporterLocations[i];
+
+            if (dungeon[location.Row, location.Col].Type != TileType.Teleporter)
+            {
+                Debug.LogError("Teleporter list does not match dungeon.");
+            }
+        }
     }
 }
