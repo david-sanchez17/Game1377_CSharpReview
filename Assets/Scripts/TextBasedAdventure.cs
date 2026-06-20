@@ -3,6 +3,7 @@ using UnityEngine.Animations;
 using UnityEngine.UIElements;
 using static TextBasedAdventure;
 
+//Maybe I'm not built for this coding stuff
 
 public class TextBasedAdventure : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class TextBasedAdventure : MonoBehaviour
     private const int ENEMY_DAMAGE = 1;
     private const int ITEM_HEAL_AMOUNT = 2;
 
+    //Teleports must be in pairs, so this constant is used to validate the teleporter list and to loop through it when teleporting.
     private const int TELEPORTER_PAIR_SIZE = 2;
 
     [System.Serializable]
@@ -82,19 +84,19 @@ public class TextBasedAdventure : MonoBehaviour
         },
         {
             "The stench of decay fills the air.",
-            "Water drips from the ceiling.",
+            "A strange liquid drips from the ceiling.",
             "You see a glint of something shiny in the corner.",
             "The walls are covered in ancient markings."
         },
         {
             "You hear scratching noises nearby.",
-            "Old armor pieces are scattered around.",
+            "Something, something, Kings Field 4 reference.",
             "The exit is locked tight. You need to find a key.",
             "A cold breeze sends shivers down your spine."
         },
         {
             "The silence here is deafening.",
-            "Bookshelves line the walls, filled with dusty tomes.",
+            "Bookshelves line the walls, filled with dusty Grimoires.",
             "A barricade blocks your path forward.",
             "The throne room is eerily quiet, but you sense danger."
         }
