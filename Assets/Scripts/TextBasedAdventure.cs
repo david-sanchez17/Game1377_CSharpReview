@@ -75,8 +75,32 @@ public class TextBasedAdventure : MonoBehaviour
     private string[,] tileDescriptions =
     {
         {
+            "You hear distant growling in the darkness.",
+            "Rusted weapons lie abandoned here.",
+            "A large iron gate leads outside.",
+            "The silence in this hall is unsettling."
+        },
+        {
+            "The stench of decay fills the air.",
+            "Water drips from the ceiling.",
+            "You see a glint of something shiny in the corner.",
+            "The walls are covered in ancient markings."
+        },
+        {
+            "You hear scratching noises nearby.",
+            "Old armor pieces are scattered around.",
+            "The exit is locked tight. You need to find a key.",
+            "A cold breeze sends shivers down your spine."
+        },
+        {
+            "The silence here is deafening.",
+            "Bookshelves line the walls, filled with dusty tomes.",
+            "A barricade blocks your path forward.",
+            "The throne room is eerily quiet, but you sense danger."
+        }
+    };
 
-    private Position[] teleporterLocations =
+private Position[] teleporterLocations =
     {
         new Position { Row = 0, Col = 3 },
         new Position { Row = 3, Col = 0 }
