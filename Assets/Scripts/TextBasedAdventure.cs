@@ -145,6 +145,8 @@ private void Update()
   
 private void OutputTileInformation()
 {
+
+        //Next time, remember your code when you get called on by professor so you dont look like a complete dumbass
     Room currentRoom = dungeon[playerRow, playerCol];
 
     Debug.Log("You are in: " + currentRoom.Name);
