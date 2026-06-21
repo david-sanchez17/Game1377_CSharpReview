@@ -147,6 +147,7 @@ private void OutputTileInformation()
 {
 
     //Next time, remember your code when you get called on by professor so you dont look like a complete dumbass
+    //Room is a struct so we get a copy of the room.
     Room currentRoom = dungeon[playerRow, playerCol];
 
     Debug.Log("You are in: " + currentRoom.Name);
@@ -154,7 +155,7 @@ private void OutputTileInformation()
     if (!currentRoom.Visited)
     {
         Debug.Log(tileDescriptions[playerRow, playerCol]);
-
+    //Mark the room as visited and update the dungeon array
         currentRoom.Visited = true;
         dungeon[playerRow, playerCol] = currentRoom;
     }
@@ -228,6 +229,7 @@ private void OutputTileInformation()
             Debug.Log("Cannot go that way.");
             return;
         }
+        //Prevents the player from moving into a blockade.
         if (dungeon[newRow, newCol].Type == TileType.Blockade)
         {
             Debug.Log("A blockade prevents movement.");
@@ -284,6 +286,7 @@ private void OutputTileInformation()
             Debug.Log("There is no teleporter here.");
             return;
         }
+        //Teleporters are in pairs, so we loop through the list in increments of 2 and check if the player is on either teleporter.
         for (int i = 0; i < teleporterLocations.Length; i += TELEPORTER_PAIR_SIZE)
         {
             Position first = teleporterLocations[i];
